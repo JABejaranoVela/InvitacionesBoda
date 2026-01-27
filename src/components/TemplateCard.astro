@@ -1,11 +1,11 @@
 ---
 const { template } = Astro.props;
 ---
-<article class="rounded-3xl border border-sand bg-paper-strong p-5 shadow-card transition hover:-translate-y-1 hover:shadow-soft">
-  <div class="flex gap-3">
-    <img src={template.images[0]} alt={template.name} class="h-32 w-20 rounded-2xl object-cover" />
-    <img src={template.images[1]} alt={template.name} class="h-32 w-20 rounded-2xl object-cover" />
-    <img src={template.images[2]} alt={template.name} class="hidden h-32 w-20 rounded-2xl object-cover md:block" />
+<article class="rounded-3xl border border-sand bg-paper-strong p-5 shadow-card transition hover:-translate-y-1 hover:shadow-soft reveal">
+  <div class="flex flex-wrap gap-3">
+    <img src={template.images[0]} alt={template.name} class="h-28 w-16 rounded-2xl object-cover sm:h-32 sm:w-20" />
+    <img src={template.images[1]} alt={template.name} class="h-28 w-16 rounded-2xl object-cover sm:h-32 sm:w-20" />
+    <img src={template.images[2]} alt={template.name} class="h-28 w-16 rounded-2xl object-cover sm:h-32 sm:w-20 md:block" />
   </div>
   <div class="mt-5 flex items-center justify-between text-xs uppercase tracking-[0.3em] text-ink-soft">
     <span>{template.code}</span>
@@ -15,7 +15,7 @@ const { template } = Astro.props;
   <p class="mt-1 text-sm text-ink-soft">{template.description}</p>
   <p class="mt-4 text-lg font-semibold text-ink">{template.price}</p>
   <div class="mt-4 grid grid-cols-2 gap-3">
-    <a href={template.previewUrl} class="rounded-full border border-ink px-4 py-2 text-center text-xs font-semibold uppercase tracking-[0.2em]">Preview</a>
-    <a href="/checkout" class="rounded-full bg-olive px-4 py-2 text-center text-xs font-semibold uppercase tracking-[0.2em] text-white hover:bg-olive-soft">Order</a>
+    <a href={template.previewUrl} class="rounded-full border border-ink px-4 py-2 text-center text-xs font-semibold uppercase tracking-[0.2em]">Ver</a>
+    <a href={`/checkout?template=${template.slug}`} class="rounded-full bg-olive px-4 py-2 text-center text-xs font-semibold uppercase tracking-[0.2em] text-white hover:bg-olive-soft">Ordenar</a>
   </div>
 </article>

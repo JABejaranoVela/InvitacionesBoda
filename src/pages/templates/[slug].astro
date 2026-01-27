@@ -34,7 +34,7 @@ const { template } = Astro.props;
           ))}
         </div>
         <div class="mt-8 flex flex-wrap gap-4">
-          <a href="/checkout" class="rounded-full bg-olive px-6 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-white">
+          <a href={`/checkout?template=${template.slug}`} class="rounded-full bg-olive px-6 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-white">
             Ordenar ahora
           </a>
           <a href="/templates" class="rounded-full border border-ink px-6 py-3 text-xs font-semibold uppercase tracking-[0.3em]">
@@ -45,7 +45,7 @@ const { template } = Astro.props;
           <SectionTitle
             eyebrow="Incluye"
             title="Todo lo esencial"
-            subtitle="Secciones listas para editar: historia, galería, RSVP, mapa, itinerario y música."
+            subtitle="Secciones listas para editar: historia, galería, confirmaciones, mapa, itinerario y música."
           />
         </div>
       </div>

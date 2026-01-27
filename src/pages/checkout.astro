@@ -3,10 +3,12 @@ import Layout from "../layouts/Layout.astro";
 import SectionTitle from "../components/SectionTitle.astro";
 import { templates } from "../data/templates";
 
-const featured = templates[0];
+const selectedSlug = Astro.url.searchParams.get("template");
+const featured = templates.find((item) => item.slug === selectedSlug) ?? templates[0];
+const templatesJson = JSON.stringify(templates);
 ---
 
-<Layout title="Checkout · Weddinggize" description="Ordena tu invitación digital">
+<Layout title="Reserva · Weddinggize" description="Ordena tu invitación digital">
   <section class="section-pad bg-paper">
     <div class="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.2fr_0.8fr]">
       <div>
@@ -28,14 +30,38 @@ const featured = templates[0];
           <button class="rounded-full bg-olive px-6 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-white">Enviar solicitud</button>
         </form>
       </div>
-      <aside class="rounded-3xl border border-sand bg-paper-strong p-6 shadow-card">
+      <aside class="rounded-3xl border border-sand bg-paper-strong p-6 shadow-card" data-template-summary>
         <p class="text-xs uppercase tracking-[0.4em] text-ink-soft">Resumen</p>
-        <h3 class="mt-4 font-display text-2xl">{featured.name}</h3>
-        <img src={featured.images[0]} alt={featured.name} class="mt-4 h-48 w-full rounded-2xl object-cover" />
-        <p class="mt-4 text-sm text-ink-soft">Incluye: {featured.features.join(", ")}</p>
-        <p class="mt-6 text-2xl font-semibold">{featured.price}</p>
+        <h3 class="mt-4 font-display text-2xl" data-template-name>{featured.name}</h3>
+        <img src={featured.images[0]} alt={featured.name} class="mt-4 h-48 w-full rounded-2xl object-cover" data-template-image />
+        <p class="mt-4 text-sm text-ink-soft" data-template-features>Incluye: {featured.features.join(", ")}</p>
+        <p class="mt-6 text-2xl font-semibold" data-template-price>{featured.price}</p>
         <p class="mt-4 text-xs text-ink-soft">Tiempo estimado de entrega: 3 - 5 días hábiles.</p>
       </aside>
     </div>
   </section>
+
+  <script type="application/json" id="templates-data" set:html={templatesJson}></script>
+  <script>
+    const data = document.getElementById("templates-data");
+    const templates = data ? JSON.parse(data.textContent || "[]") : [];
+    const params = new URLSearchParams(window.location.search);
+    const selected = params.get("template");
+    const template = templates.find((item) => item.slug === selected) || templates[0];
+
+    if (template) {
+      const name = document.querySelector("[data-template-name]");
+      const image = document.querySelector("[data-template-image]");
+      const features = document.querySelector("[data-template-features]");
+      const price = document.querySelector("[data-template-price]");
+
+      if (name) name.textContent = template.name;
+      if (image) {
+        image.src = template.images[0];
+        image.alt = template.name;
+      }
+      if (features) features.textContent = `Incluye: ${template.features.join(", ")}`;
+      if (price) price.textContent = template.price;
+    }
+  </script>
 </Layout>

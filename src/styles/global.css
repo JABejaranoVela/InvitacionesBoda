@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@300;400;500;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 :root {
@@ -18,9 +18,10 @@
 }
 
 body {
-  font-family: "Manrope", system-ui, -apple-system, sans-serif;
+  font-family: "Alegreya Sans", system-ui, -apple-system, sans-serif;
   color: var(--ink);
-  background: var(--paper);
+  background: linear-gradient(135deg, #f6f1e8 0%, #efe7da 45%, #f6f1e8 100%);
+  line-height: 1.6;
 }
 
 img {
@@ -47,6 +48,9 @@ img {
   .text-ink-soft {
     color: var(--ink-soft);
   }
+  .text-paper {
+    color: var(--paper);
+  }
   .text-accent {
     color: var(--accent);
   }
@@ -60,15 +64,52 @@ img {
     box-shadow: 0 16px 40px rgba(28, 25, 22, 0.12);
   }
   .font-display {
-    font-family: "Playfair Display", "Times New Roman", serif;
+    font-family: "Cormorant Garamond", "Times New Roman", serif;
   }
   .font-body {
-    font-family: "Manrope", system-ui, -apple-system, sans-serif;
+    font-family: "Alegreya Sans", system-ui, -apple-system, sans-serif;
+  }
+  .text-shadow-hero {
+    text-shadow: 0 12px 30px rgba(14, 12, 10, 0.55);
   }
 }
 
 .section-pad {
   padding: 4.5rem 1.5rem;
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal {
+  opacity: 0;
+  animation: reveal-up 0.8s ease forwards;
+}
+
+.reveal-delay-1 {
+  animation-delay: 0.1s;
+}
+
+.reveal-delay-2 {
+  animation-delay: 0.2s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-delay-1,
+  .reveal-delay-2 {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }
 
 @media (min-width: 1024px) {
