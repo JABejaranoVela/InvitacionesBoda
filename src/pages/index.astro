@@ -1,17 +1,91 @@
 ---
-
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import TemplateCard from "../components/TemplateCard.astro";
+import FeatureCard from "../components/FeatureCard.astro";
+import StepCard from "../components/StepCard.astro";
+import TestimonialCard from "../components/TestimonialCard.astro";
+import { templates } from "../data/templates";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="Weddinggize · Invitaciones Digitales" description="Invitaciones digitales de boda con estética editorial" navVariant="overlay">
+  <Hero />
+
+  <section class="section-pad bg-paper">
+    <SectionTitle
+      eyebrow="Weddinggize"
+      title="Design Undangan"
+      subtitle="Explora nuestras plantillas más solicitadas. Cada diseño incluye RSVP, mapa y secciones personalizables."
+    />
+    <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {templates.slice(0, 3).map((template) => (
+        <TemplateCard template={template} />
+      ))}
+    </div>
+  </section>
+
+  <section class="section-pad bg-paper-strong">
+    <SectionTitle
+      eyebrow="Beneficios"
+      title="Detalles que enamoran"
+      subtitle="Todo lo que necesitas para una invitación moderna, práctica y memorable."
+    />
+    <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <FeatureCard title="Personalizable" description="Texto, paleta y fotos adaptadas a tu historia." icon="✿" />
+      <FeatureCard title="RSVP" description="Confirma invitados en tiempo real desde cualquier dispositivo." icon="✓" />
+      <FeatureCard title="Entrega rápida" description="Listo en 3 a 5 días hábiles con soporte directo." icon="⚡" />
+      <FeatureCard title="Experiencia premium" description="Animaciones suaves y audio integrado." icon="♪" />
+    </div>
+  </section>
+
+  <section class="section-pad bg-paper">
+    <div class="mx-auto max-w-6xl">
+      <div class="grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:items-center">
+        <div>
+          <SectionTitle
+            eyebrow="Proceso"
+            title="Cómo funciona"
+            subtitle="Diseñamos tu invitación digital con pasos claros y acompañamiento cercano."
+          />
+        </div>
+        <div class="grid gap-4">
+          <StepCard step="01" title="Elige tu plantilla" description="Selecciona el estilo que mejor represente tu boda." />
+          <StepCard step="02" title="Comparte la info" description="Recibimos textos, fotos y datos clave en un formulario." />
+          <StepCard step="03" title="Entrega y ajustes" description="Te enviamos una versión editable para tu aprobación final." />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad bg-paper-strong">
+    <SectionTitle
+      eyebrow="Parejas felices"
+      title="Testimonios"
+      subtitle="Historias reales de parejas que ya enviaron su invitación digital."
+    />
+    <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <TestimonialCard quote="La plantilla quedó increíble y el RSVP nos ayudó muchísimo." name="Daniela & Luis" detail="Lima" />
+      <TestimonialCard quote="Todo el proceso fue rápido, el diseño es elegante." name="Melissa & Andrés" detail="Bogotá" />
+      <TestimonialCard quote="Recibimos muchos comentarios bonitos de nuestros invitados." name="Sofía & Diego" detail="Quito" />
+    </div>
+  </section>
+
+  <section class="section-pad bg-olive text-white">
+    <div class="mx-auto flex max-w-5xl flex-col items-center text-center">
+      <p class="text-xs uppercase tracking-[0.4em] text-white/60">Listos para comenzar</p>
+      <h2 class="mt-4 font-display text-3xl md:text-4xl">Haz tu invitación hoy</h2>
+      <p class="mt-4 max-w-2xl text-sm text-white/80 md:text-base">
+        Cuéntanos la fecha, el estilo y la historia de tu boda. Nosotros nos encargamos del resto.
+      </p>
+      <div class="mt-6 flex flex-wrap justify-center gap-4">
+        <a href="/checkout" class="rounded-full bg-white px-6 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-olive">
+          Ordenar
+        </a>
+        <a href="/templates" class="rounded-full border border-white px-6 py-3 text-xs font-semibold uppercase tracking-[0.3em]">
+          Ver plantillas
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

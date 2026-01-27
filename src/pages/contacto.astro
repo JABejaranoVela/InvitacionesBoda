@@ -1,0 +1,32 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+---
+
+<Layout title="Contacto · Weddinggize" description="Conversemos sobre tu invitación">
+  <section class="section-pad bg-paper">
+    <div class="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1fr_1fr]">
+      <div>
+        <SectionTitle
+          eyebrow="Contacto"
+          title="Cuéntanos tu historia"
+          subtitle="Nos encanta escuchar los detalles de tu boda y convertirlos en una invitación única."
+        />
+        <div class="mt-8 space-y-3 text-sm text-ink-soft">
+          <p>Escríbenos a hola@weddinggize.com</p>
+          <p>WhatsApp: +51 999 888 777</p>
+          <p>Horario: Lunes a Viernes · 9:00 - 18:00</p>
+        </div>
+      </div>
+      <form class="rounded-3xl border border-sand bg-paper-strong p-6 shadow-card">
+        <div class="grid gap-4">
+          <input class="rounded-2xl border border-sand bg-white/70 px-4 py-3 text-sm" placeholder="Nombre" />
+          <input class="rounded-2xl border border-sand bg-white/70 px-4 py-3 text-sm" placeholder="Email" />
+          <input class="rounded-2xl border border-sand bg-white/70 px-4 py-3 text-sm" placeholder="Fecha del evento" />
+          <textarea class="min-h-[140px] rounded-2xl border border-sand bg-white/70 px-4 py-3 text-sm" placeholder="Cuéntanos sobre tu boda"></textarea>
+          <button class="rounded-full bg-olive px-6 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-white">Enviar mensaje</button>
+        </div>
+      </form>
+    </div>
+  </section>
+</Layout>

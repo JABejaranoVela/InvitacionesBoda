@@ -1,0 +1,30 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+---
+
+<Layout title="FAQ · Weddinggize" description="Preguntas frecuentes">
+  <section class="section-pad bg-paper">
+    <div class="mx-auto max-w-4xl">
+      <SectionTitle
+        eyebrow="FAQ"
+        title="Resolvemos tus dudas"
+        subtitle="Información clave sobre tiempos, personalización y entrega."
+      />
+      <div class="mt-10 grid gap-4">
+        <details class="rounded-3xl border border-sand bg-paper-strong p-6">
+          <summary class="cursor-pointer text-sm font-semibold uppercase tracking-[0.2em]">¿Cuánto tarda el diseño?</summary>
+          <p class="mt-3 text-sm text-ink-soft">Entre 3 y 5 días hábiles luego de recibir toda la información.</p>
+        </details>
+        <details class="rounded-3xl border border-sand bg-paper-strong p-6">
+          <summary class="cursor-pointer text-sm font-semibold uppercase tracking-[0.2em]">¿Puedo cambiar los colores?</summary>
+          <p class="mt-3 text-sm text-ink-soft">Sí, adaptamos la paleta, tipografías y estilos según tu preferencia.</p>
+        </details>
+        <details class="rounded-3xl border border-sand bg-paper-strong p-6">
+          <summary class="cursor-pointer text-sm font-semibold uppercase tracking-[0.2em]">¿Incluye soporte?</summary>
+          <p class="mt-3 text-sm text-ink-soft">Incluimos dos rondas de ajustes y soporte por WhatsApp.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+:root {
+  --paper: #f6f1e8;
+  --paper-strong: #efe7da;
+  --ink: #1e1b16;
+  --ink-soft: #5c5349;
+  --olive: #2f3a2a;
+  --olive-soft: #4a5a42;
+  --sand: #d7c9b4;
+  --stone: #b7a893;
+  --accent: #a6764c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Manrope", system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+@layer utilities {
+  .bg-paper {
+    background-color: var(--paper);
+  }
+  .bg-paper-strong {
+    background-color: var(--paper-strong);
+  }
+  .bg-olive {
+    background-color: var(--olive);
+  }
+  .bg-olive-soft {
+    background-color: var(--olive-soft);
+  }
+  .text-ink {
+    color: var(--ink);
+  }
+  .text-ink-soft {
+    color: var(--ink-soft);
+  }
+  .text-accent {
+    color: var(--accent);
+  }
+  .border-sand {
+    border-color: var(--sand);
+  }
+  .shadow-soft {
+    box-shadow: 0 24px 60px rgba(28, 25, 22, 0.16);
+  }
+  .shadow-card {
+    box-shadow: 0 16px 40px rgba(28, 25, 22, 0.12);
+  }
+  .font-display {
+    font-family: "Playfair Display", "Times New Roman", serif;
+  }
+  .font-body {
+    font-family: "Manrope", system-ui, -apple-system, sans-serif;
+  }
+}
+
+.section-pad {
+  padding: 4.5rem 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .section-pad {
+    padding: 6.5rem 5rem;
+  }
+}

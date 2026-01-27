@@ -1,0 +1,8 @@
+---
+const { title, description, icon = "✦" } = Astro.props;
+---
+<div class="rounded-3xl border border-sand bg-paper-strong p-6 text-left shadow-card">
+  <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-olive text-white text-lg">{icon}</div>
+  <h3 class="mt-4 font-display text-xl">{title}</h3>
+  <p class="mt-2 text-sm text-ink-soft">{description}</p>
+</div>

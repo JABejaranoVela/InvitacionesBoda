@@ -1,0 +1,41 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import { templates } from "../data/templates";
+
+const featured = templates[0];
+---
+
+<Layout title="Checkout · Weddinggize" description="Ordena tu invitación digital">
+  <section class="section-pad bg-paper">
+    <div class="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.2fr_0.8fr]">
+      <div>
+        <SectionTitle
+          eyebrow="Ordenar"
+          title="Reserva tu invitación"
+          subtitle="Completa los datos principales y te contactamos para el diseño final."
+        />
+        <form class="mt-10 grid gap-6">
+          <div class="grid gap-4 md:grid-cols-2">
+            <input class="rounded-2xl border border-sand bg-white/70 px-4 py-3 text-sm" placeholder="Nombre de la pareja" />
+            <input class="rounded-2xl border border-sand bg-white/70 px-4 py-3 text-sm" placeholder="Fecha del evento" />
+          </div>
+          <div class="grid gap-4 md:grid-cols-2">
+            <input class="rounded-2xl border border-sand bg-white/70 px-4 py-3 text-sm" placeholder="Email" />
+            <input class="rounded-2xl border border-sand bg-white/70 px-4 py-3 text-sm" placeholder="WhatsApp" />
+          </div>
+          <textarea class="min-h-[140px] rounded-2xl border border-sand bg-white/70 px-4 py-3 text-sm" placeholder="Mensaje o detalles adicionales"></textarea>
+          <button class="rounded-full bg-olive px-6 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-white">Enviar solicitud</button>
+        </form>
+      </div>
+      <aside class="rounded-3xl border border-sand bg-paper-strong p-6 shadow-card">
+        <p class="text-xs uppercase tracking-[0.4em] text-ink-soft">Resumen</p>
+        <h3 class="mt-4 font-display text-2xl">{featured.name}</h3>
+        <img src={featured.images[0]} alt={featured.name} class="mt-4 h-48 w-full rounded-2xl object-cover" />
+        <p class="mt-4 text-sm text-ink-soft">Incluye: {featured.features.join(", ")}</p>
+        <p class="mt-6 text-2xl font-semibold">{featured.price}</p>
+        <p class="mt-4 text-xs text-ink-soft">Tiempo estimado de entrega: 3 - 5 días hábiles.</p>
+      </aside>
+    </div>
+  </section>
+</Layout>

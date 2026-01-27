@@ -1,0 +1,9 @@
+---
+const { quote, name, detail } = Astro.props;
+---
+<figure class="rounded-3xl border border-sand bg-white/70 p-6 shadow-card">
+  <blockquote class="text-sm text-ink-soft">“{quote}”</blockquote>
+  <figcaption class="mt-4 text-xs uppercase tracking-[0.3em] text-ink">
+    {name} <span class="text-ink-soft normal-case tracking-normal">· {detail}</span>
+  </figcaption>
+</figure>

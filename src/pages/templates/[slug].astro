@@ -1,0 +1,54 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import SectionTitle from "../../components/SectionTitle.astro";
+import { templates } from "../../data/templates";
+
+export function getStaticPaths() {
+  return templates.map((template) => ({
+    params: { slug: template.slug },
+    props: { template }
+  }));
+}
+
+const { template } = Astro.props;
+---
+
+<Layout title={`Detalle · ${template.name}`} description={template.description}>
+  <section class="section-pad bg-paper">
+    <div class="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+      <div class="grid gap-4">
+        <img src={template.images[0]} alt={template.name} class="h-80 w-full rounded-3xl object-cover" />
+        <div class="grid grid-cols-2 gap-4">
+          <img src={template.images[1]} alt={template.name} class="h-48 w-full rounded-3xl object-cover" />
+          <img src={template.images[2]} alt={template.name} class="h-48 w-full rounded-3xl object-cover" />
+        </div>
+      </div>
+      <div>
+        <p class="text-xs uppercase tracking-[0.4em] text-ink-soft">Plantilla destacada</p>
+        <h1 class="mt-4 font-display text-4xl">{template.name}</h1>
+        <p class="mt-3 text-ink-soft">{template.description}</p>
+        <p class="mt-6 text-2xl font-semibold">{template.price}</p>
+        <div class="mt-6 flex flex-wrap gap-2 text-xs uppercase tracking-[0.3em] text-ink-soft">
+          {template.features.map((feature) => (
+            <span class="rounded-full border border-sand px-4 py-2">{feature}</span>
+          ))}
+        </div>
+        <div class="mt-8 flex flex-wrap gap-4">
+          <a href="/checkout" class="rounded-full bg-olive px-6 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-white">
+            Ordenar ahora
+          </a>
+          <a href="/templates" class="rounded-full border border-ink px-6 py-3 text-xs font-semibold uppercase tracking-[0.3em]">
+            Ver más plantillas
+          </a>
+        </div>
+        <div class="mt-10 rounded-3xl border border-sand bg-paper-strong p-6">
+          <SectionTitle
+            eyebrow="Incluye"
+            title="Todo lo esencial"
+            subtitle="Secciones listas para editar: historia, galería, RSVP, mapa, itinerario y música."
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
