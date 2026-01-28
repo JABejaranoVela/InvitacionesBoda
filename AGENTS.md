@@ -40,8 +40,10 @@
 - Guías de estética/diseño (look & feel): @doc/frontend-aesthetics-guidelines.md
 - Registro de skills y decisiones: @doc/skills-used.md
 
-Regla: antes de modificar UI/estilos/componentes, consulta los docs anteriores y sigue sus normas.
-Si un doc entra en conflicto con otro, prioriza este orden:
-1) AGENTS.md
-2) frontend-style.md
-3) frontend-aesthetics-guidelines.md
+Regla:
+- Antes de cambios visuales (UI, CSS, Tailwind, componentes en `src/components/`, layouts o páginas), consulta
+  @doc/frontend-style.md y @doc/frontend-aesthetics-guidelines.md y aplica sus reglas.
+- Si hay conflicto, prioridad:
+  1) AGENTS.md
+  2) @doc/frontend-style.md
+  3) @doc/frontend-aesthetics-guidelines.md
