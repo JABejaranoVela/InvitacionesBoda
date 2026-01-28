@@ -2,6 +2,8 @@
 import Layout from "../layouts/Layout.astro";
 import SectionTitle from "../components/SectionTitle.astro";
 import { templates } from "../data/templates";
+import "flatpickr/dist/flatpickr.min.css";
+import datepickerUrl from "../scripts/datepicker.ts?url";
 
 const selectedSlug = Astro.url.searchParams.get("template");
 const featured = templates.find((item) => item.slug === selectedSlug) ?? templates[0];
@@ -17,17 +19,73 @@ const templatesJson = JSON.stringify(templates);
           title="Reserva tu invitación"
           subtitle="Completa los datos principales y te contactamos para el diseño final."
         />
-        <form class="mt-10 grid gap-6">
-          <div class="grid gap-4 md:grid-cols-2">
-            <input class="rounded-2xl border border-sand bg-white/70 px-4 py-3 text-sm" placeholder="Nombre de la pareja" />
-            <input class="rounded-2xl border border-sand bg-white/70 px-4 py-3 text-sm" placeholder="Fecha del evento" />
+        <form id="pedido-form" class="mt-10 grid gap-6" action="/api/pedido.php" method="post" data-ajax="true" novalidate>
+          <input type="hidden" name="template" value={featured.slug} data-template-field />
+          <input type="hidden" name="started_at" value={Date.now().toString()} data-started-field />
+          <input type="text" name="website" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+
+          <div class="grid gap-5 md:grid-cols-2 md:gap-x-8">
+            <div class="flex flex-col gap-2">
+              <input
+                name="pareja"
+                required
+                minlength="3"
+                maxlength="80"
+                pattern="^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ'’.,\\-\\s]{3,80}$"
+                class="rounded-2xl border border-sand bg-white/70 px-4 py-3 text-sm"
+                placeholder="Nombre de la pareja"
+                data-validate
+              />
+              <p class="min-h-[1rem] text-[11px] font-medium text-red-700/80" data-error-for="pareja"></p>
+            </div>
+            <div class="flex flex-col gap-2">
+              <input
+                name="fecha_evento"
+                type="text"
+                pattern="^\\d{2}\\/\\d{2}\\/\\d{4}$"
+                class="rounded-2xl border border-sand bg-white/70 px-4 py-3 text-sm"
+                placeholder="Fecha del evento (dd/mm/aaaa)"
+                data-validate
+                data-date-picker
+                readonly
+              />
+              <p class="min-h-[1rem] text-[11px] font-medium text-red-700/80" data-error-for="fecha_evento"></p>
+            </div>
           </div>
-          <div class="grid gap-4 md:grid-cols-2">
-            <input class="rounded-2xl border border-sand bg-white/70 px-4 py-3 text-sm" placeholder="Email" />
-            <input class="rounded-2xl border border-sand bg-white/70 px-4 py-3 text-sm" placeholder="WhatsApp" />
+          <div class="grid gap-5 md:grid-cols-2 md:gap-x-8">
+            <div class="flex flex-col gap-2">
+              <input
+                name="email"
+                type="email"
+                required
+                autocomplete="email"
+                class="rounded-2xl border border-sand bg-white/70 px-4 py-3 text-sm"
+                placeholder="Email"
+                data-validate
+              />
+              <p class="min-h-[1rem] text-[11px] font-medium text-red-700/80" data-error-for="email"></p>
+            </div>
+            <div class="flex flex-col gap-2">
+              <input
+                name="telefono"
+                type="text"
+                required
+                inputmode="numeric"
+                pattern="^[0-9]{7,15}$"
+                autocomplete="tel"
+                class="rounded-2xl border border-sand bg-white/70 px-4 py-3 text-sm"
+                placeholder="Teléfono"
+                data-validate
+              />
+              <p class="min-h-[1rem] text-[11px] font-medium text-red-700/80" data-error-for="telefono"></p>
+            </div>
           </div>
-          <textarea class="min-h-[140px] rounded-2xl border border-sand bg-white/70 px-4 py-3 text-sm" placeholder="Mensaje o detalles adicionales"></textarea>
+          <div class="flex flex-col gap-2">
+            <textarea name="mensaje" maxlength="500" class="min-h-[140px] rounded-2xl border border-sand bg-white/70 px-4 py-3 text-sm" placeholder="Mensaje o detalles adicionales"></textarea>
+            <p class="min-h-[1rem] text-[11px] font-medium text-red-700/80" data-error-for="mensaje"></p>
+          </div>
           <button class="rounded-full bg-olive px-6 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-white">Enviar solicitud</button>
+          <p id="pedido-status" class="text-sm text-ink-soft"></p>
         </form>
       </div>
       <aside class="rounded-3xl border border-sand bg-paper-strong p-6 shadow-card" data-template-summary>
@@ -63,5 +121,145 @@ const templatesJson = JSON.stringify(templates);
       if (features) features.textContent = `Incluye: ${template.features.join(", ")}`;
       if (price) price.textContent = template.price;
     }
+
+    const form = document.getElementById("pedido-form");
+    const status = document.getElementById("pedido-status");
+    const templateField = document.querySelector("[data-template-field]");
+    const startedField = document.querySelector("[data-started-field]");
+
+    if (templateField && template) templateField.value = template.slug;
+    if (startedField) startedField.value = String(Date.now());
+
+    const invalidMessages = {
+      pareja: "Introduce un nombre válido (solo letras y espacios).",
+      email: "Introduce un correo válido.",
+      telefono: "Introduce un teléfono válido (solo números).",
+      fecha_evento: "Introduce una fecha válida (dd/mm/aaaa).",
+      mensaje: "No se permiten enlaces ni contenido promocional.",
+      required: "Este campo es obligatorio."
+    };
+
+    const urlPattern = /(https?:\/\/|www\.|\.(com|net|org|info|biz|io|co|es|mx|pe|ar|cl|br|uk|us))/i;
+    const blockedWords = [
+      "viagra",
+      "cialis",
+      "casino",
+      "bet",
+      "betting",
+      "loan",
+      "prestamo",
+      "préstamo",
+      "credito",
+      "crédito",
+      "crypto",
+      "bitcoin",
+      "forex",
+      "investment",
+      "inversion",
+      "inversión",
+      "work from home",
+      "dinero gratis",
+      "free money",
+      "adult",
+      "xxx",
+      "seo",
+      "backlink",
+      "affiliate",
+      "afiliado",
+      "promo code",
+      "descuento"
+    ];
+
+    const getErrorElement = (field) => document.querySelector(`[data-error-for="${field.name}"]`);
+
+    const setError = (field, message) => {
+      const errorEl = getErrorElement(field);
+      if (errorEl) errorEl.textContent = message || "";
+      if (message) {
+        field.classList.add("border-red-500");
+      } else {
+        field.classList.remove("border-red-500");
+      }
+    };
+
+    const validateField = (field) => {
+      let message = "";
+      const value = field.value.trim();
+
+      if (field.required && value === "") {
+        message = invalidMessages.required;
+      } else if (field.name === "pareja" && value !== "") {
+        if (!field.checkValidity()) message = invalidMessages.pareja;
+      } else if (field.name === "email" && value !== "") {
+        if (!field.checkValidity()) message = invalidMessages.email;
+      } else if (field.name === "telefono" && value !== "") {
+        if (!field.checkValidity()) message = invalidMessages.telefono;
+      } else if (field.name === "fecha_evento" && value !== "") {
+        if (!field.checkValidity()) message = invalidMessages.fecha_evento;
+      }
+
+      if (field.name === "mensaje" && value !== "") {
+        const hasUrl = urlPattern.test(value);
+        const hasBlockedWord = blockedWords.some((word) => value.toLowerCase().includes(word));
+        if (hasUrl || hasBlockedWord) message = "No se permiten enlaces en el mensaje.";
+      }
+
+      setError(field, message);
+      return message === "";
+    };
+
+    let hasSubmitted = false;
+    const fields = Array.from(form?.querySelectorAll("[data-validate], textarea[name=\"mensaje\"], input[name=\"fecha_evento\"]") || []);
+
+    const digitsOnly = (value) => value.replace(/\\D+/g, "");
+
+    fields.forEach((field) => {
+      field.addEventListener("input", () => {
+        if (field.name === "telefono") {
+          field.value = digitsOnly(field.value);
+        }
+        if (hasSubmitted) validateField(field);
+      });
+      field.addEventListener("blur", () => {
+        if (hasSubmitted) validateField(field);
+      });
+    });
+
+    if (form && form.dataset.ajax === "true" && window.fetch) {
+      form.addEventListener("submit", async (event) => {
+        hasSubmitted = true;
+        const results = fields.map((field) => validateField(field));
+        const firstInvalid = fields.find((field, index) => results[index] === false);
+        if (firstInvalid) {
+          firstInvalid.focus();
+          event.preventDefault();
+          return;
+        }
+
+        event.preventDefault();
+        status.textContent = "Enviando solicitud...";
+        const formData = new FormData(form);
+
+        try {
+          const response = await fetch(form.action, {
+            method: "POST",
+            body: formData
+          });
+          const result = await response.json();
+          if (response.ok && result.ok) {
+            status.textContent = "Solicitud enviada. Gracias, te contactaremos pronto.";
+            form.reset();
+            if (templateField && template) templateField.value = template.slug;
+            if (startedField) startedField.value = String(Date.now());
+          } else {
+            status.textContent = result.message || "No se pudo enviar. Intenta de nuevo.";
+          }
+        } catch (error) {
+          status.textContent = "Error de conexión. Intenta de nuevo.";
+        }
+      });
+    }
   </script>
+
+  <script type="module" src={datepickerUrl}></script>
 </Layout>

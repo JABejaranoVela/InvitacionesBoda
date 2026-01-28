@@ -5,7 +5,10 @@ import TemplateCard from "../../components/TemplateCard.astro";
 import { templates } from "../../data/templates";
 ---
 
-<Layout title="Plantillas · Weddinggize" description="Catálogo de invitaciones digitales">
+<Layout
+  title="Plantillas · Weddinggize"
+  description="Catálogo de invitaciones digitales"
+>
   <section class="section-pad bg-paper">
     <div class="mx-auto max-w-6xl">
       <SectionTitle
@@ -14,16 +17,32 @@ import { templates } from "../../data/templates";
         subtitle="Filtra por estilo, precio o detalles especiales para tu celebración."
       />
 
-      <div class="mt-10 flex flex-wrap items-center justify-between gap-4 rounded-3xl border border-sand bg-paper-strong p-5">
+      <div
+        class="mt-10 flex flex-wrap items-center justify-between gap-4 rounded-3xl border border-sand bg-paper-strong p-5"
+      >
         <div class="flex flex-wrap gap-3">
-          <button class="rounded-full border border-sand px-4 py-2 text-xs uppercase tracking-[0.3em]">Minimalista</button>
-          <button class="rounded-full border border-sand px-4 py-2 text-xs uppercase tracking-[0.3em]">Floral</button>
-          <button class="rounded-full border border-sand px-4 py-2 text-xs uppercase tracking-[0.3em]">Clásico</button>
-          <button class="rounded-full border border-sand px-4 py-2 text-xs uppercase tracking-[0.3em]">Moderno</button>
+          <button
+            class="rounded-full border border-sand px-4 py-2 text-xs uppercase tracking-[0.3em]"
+            >Minimalista</button
+          >
+          <button
+            class="rounded-full border border-sand px-4 py-2 text-xs uppercase tracking-[0.3em]"
+            >Floral</button
+          >
+          <button
+            class="rounded-full border border-sand px-4 py-2 text-xs uppercase tracking-[0.3em]"
+            >Clásico</button
+          >
+          <button
+            class="rounded-full border border-sand px-4 py-2 text-xs uppercase tracking-[0.3em]"
+            >Moderno</button
+          >
         </div>
         <div class="flex items-center gap-3 text-xs uppercase tracking-[0.3em]">
           <span class="text-ink-soft">Rango</span>
-          <select class="rounded-full border border-sand bg-transparent px-4 py-2">
+          <select
+            class="rounded-full border border-sand bg-transparent px-4 py-2"
+          >
             <option>Todos</option>
             <option>50€ - 100€</option>
             <option>100€ - 150€</option>
@@ -32,15 +51,13 @@ import { templates } from "../../data/templates";
       </div>
 
       <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {templates.map((template) => (
-          <TemplateCard template={template} />
-        ))}
+        {templates.map((template) => <TemplateCard template={template} />)}
       </div>
 
-      <div class="mt-10 flex items-center justify-center gap-3 text-xs uppercase tracking-[0.3em] text-ink-soft">
+      <div
+        class="mt-10 flex items-center justify-center gap-3 text-xs uppercase tracking-[0.3em] text-ink-soft"
+      >
         <button class="rounded-full border border-sand px-4 py-2">1</button>
-        <button class="rounded-full border border-sand px-4 py-2">2</button>
-        <button class="rounded-full border border-sand px-4 py-2">3</button>
       </div>
     </div>
   </section>
